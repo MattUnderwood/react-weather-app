@@ -9,8 +9,6 @@ class GeoLocate extends React.Component {
                 ? <div>Geolocation is not enabled</div>
                 : this.props.coords
                 ? <form onSubmit = {this.props.loadIt} >
-                        {/* <div name="lat" value={this.props.coords.latitude}></div>
-                        <div type="number" name="long" value={this.props.coords.longitude}></div> */}
                         <input  name="lat" defaultValue={this.props.coords.latitude} />
                         <input  name="long" defaultValue={this.props.coords.longitude} />
                     <button>Show Weather</button>
