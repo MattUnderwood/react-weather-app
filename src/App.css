@@ -1,0 +1,5 @@
+body {
+  display: flex;
+  justify-content: center;
+  background-image: url("https://res.cloudinary.com/dls40gzte/image/upload/v1551387175/Weather%20App/weather.png");
+}
