@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Form from './form';
 import GeoLocate from './geoLocate';
 import Weather from './weather';
-import Or from './or';
+import '../HomeDisplay.css';
+
 
 export default class homeDisplay extends Component {
     constructor(props) {
@@ -15,6 +16,8 @@ export default class homeDisplay extends Component {
             homeView: true, 
             formView: false, 
             geoView: false,
+            formEntry: false,
+            geoEntry: false,
             // For weather results
             temperature: undefined,
             city: undefined,
@@ -22,7 +25,7 @@ export default class homeDisplay extends Component {
             humidity: undefined,
             description: undefined,
             wind: undefined,
-            weatherIcon: undefined,
+            main: undefined,
             error: undefined
         };
     }
@@ -40,6 +43,8 @@ export default class homeDisplay extends Component {
             homeView: true, 
             formView: false, 
             geoView: false, 
+            formEntry: false,
+            geoEntry: false,
             temperature: undefined,
             fTemp: undefined,
             city: undefined,
@@ -47,7 +52,7 @@ export default class homeDisplay extends Component {
             humidity: undefined,
             description: undefined,
             wind: undefined,
-            weatherIcon: undefined,
+            main: undefined,
             error: undefined 
         });
     }
@@ -68,6 +73,8 @@ export default class homeDisplay extends Component {
 
         if (city && country) {
             this.setState({
+                formView: false,
+                formEntry: true,
                 fTemp: (response.main.temp * (9 / 5) - 459.67).toFixed(1),
                 // cTemp: (response.main.temp - 273).toFixed(1),
                 city: response.name,
@@ -75,7 +82,8 @@ export default class homeDisplay extends Component {
                 humidity: response.main.humidity,
                 wind: response.wind.speed,
                 description: response.weather[0].description,
-                error: ""
+                main: response.weather[0].main,
+                error: "",
             });
         } else {
             this.setState({
@@ -100,6 +108,8 @@ export default class homeDisplay extends Component {
 
         if (lat && long) {
             this.setState({
+                geoView: false,
+                geoEntry: true,
                 fTemp: (response.main.temp * (9 / 5) - 459.67).toFixed(1),
                 // cTemp: (response.main.temp - 273).toFixed(1),
                 city: response.name,
@@ -120,7 +130,10 @@ export default class homeDisplay extends Component {
         const homeView = this.state.homeView;
         const formView = this.state.formView;
         const geoView = this.state.geoView;
+        const formEntry = this.state.formEntry;
+        const geoEntry = this.state.geoEntry;
         let formButton;
+        let weatherResults;
         let or;
         let geoButton;
         let form;
@@ -128,32 +141,48 @@ export default class homeDisplay extends Component {
         let reset;
 
         if (homeView) {
-            formButton = <button onClick={this.handleFormClick}>Enter Your City</button>
-            or = <p>OR</p>
-            geoButton = <button onClick={this.handleGeoClick}>Find Your Location</button>
+            formButton = <button className="btn" onClick={this.handleFormClick}>Enter Your City</button>
+            or = <p className="or">OR</p>
+            geoButton = <button className="btn" onClick={this.handleGeoClick}>Find Your Location</button>
         } else if (formView) {
             form = <Form loadWeather={this.getWeather} />;
-            reset = <button onClick={this.handleResetClick}>Reset</button>
+            reset = <button className="btn" onClick={this.handleResetClick}>Reset</button>
+        } else if (formEntry) {
+            weatherResults = <Weather
+                fTemp={this.state.fTemp}
+                city={this.state.city}
+                country={this.state.country}
+                humidity={this.state.humidity}
+                description={this.state.description}
+                main={this.state.main}
+                wind={this.state.wind}
+                error={this.state.error} 
+                formEntry={this.state.formEntry} />;
+            reset = <button className="btn" onClick={this.handleResetClick}>Reset</button>
         } else if (geoView) {
             geo = <GeoLocate loadIt={this.getGeoWeather} />;
-            reset = <button onClick={this.handleResetClick}>Reset</button>
+            reset = <button className="btn" onClick={this.handleResetClick}>Reset</button>
+        } else if (geoEntry) {
+            weatherResults = <Weather
+                fTemp={this.state.fTemp}
+                city={this.state.city}
+                country={this.state.country}
+                humidity={this.state.humidity}
+                description={this.state.description}
+                wind={this.state.wind}
+                error={this.state.error}
+                formEntry={this.state.formEntry} />;
+            reset = <button className="btn" onClick={this.handleResetClick}>Reset</button>
         }
 
         return (
-            <div>
-                <Weather
-                    fTemp={this.state.fTemp}
-                    city={this.state.city}
-                    country={this.state.country}
-                    humidity={this.state.humidity}
-                    description={this.state.description}
-                    wind={this.state.wind}
-                    error={this.state.error} />
+            <div className="homeDisplayMain">
                 {formButton}
                 {form}
                 {or}
                 {geoButton}
                 {geo}
+                {weatherResults}
                 {reset}
             </div>
         );

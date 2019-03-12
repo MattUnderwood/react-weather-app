@@ -1,0 +1,31 @@
+.weatherDisplay {
+    color: white;
+}
+
+.yourCity {
+    font-size: 2.2rem;
+    font-weight: 550;
+    margin-top: 0;
+}
+
+.weatherIcon {
+  width: 200px;
+  margin-top: -50px;
+  margin-bottom: -25px;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.weatherConditionList {
+  list-style-type: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
