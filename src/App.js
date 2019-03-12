@@ -12,8 +12,8 @@ class App extends React.Component {
     humidity: undefined,
     description: undefined,
     wind: undefined,
-    weatherIcon: undefined,
-    error: undefined
+    main: undefined,
+    error: undefined,
   }
 
   render() {

@@ -5,21 +5,18 @@ import '../geo.css';
 class GeoLocate extends React.Component {
     render() {
         return !this.props.isGeolocationAvailable
-            ? <div className="error">Your browser does not support Geolocation</div>
+            ? <div className="message">Your browser does not support Geolocation</div>
             : !this.props.isGeolocationEnabled
-                ? <div className="error">Geolocation is not enabled</div>
+                ? <div className="message">Geolocation is not enabled</div>
                 : this.props.coords
-                    // ? function trigger() {
-                    //     const lat = this.props.coords.latitude
-                    //     const long = this.props.coords.longitude
-                    // }
-    
               ?  < form  onSubmit = { this.props.loadIt }>
-                        <input className="input" name="lat" defaultValue={this.props.coords.latitude} />
-                        <input className="input" name="long" defaultValue={this.props.coords.longitude} />
-                    <button className="btn">Show Weather</button>
+                        <p className="message">Your location was found!</p>
+                        <input className="hide" name="lat" defaultValue={this.props.coords.latitude} />
+                        <input className="hide" name="long" defaultValue={this.props.coords.longitude} />
+                        <br />
+                    <button className="btn margin">Click here to see your local weather</button>
                 </form >
-                   : <div className="error">Getting the location data&hellip; </div>;
+                   : <div className="message">Getting the location data&hellip; </div>;
                 
     }
 }

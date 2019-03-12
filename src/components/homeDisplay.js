@@ -117,6 +117,7 @@ export default class homeDisplay extends Component {
                 humidity: response.main.humidity,
                 wind: response.wind.speed,
                 description: response.weather[0].description,
+                main: response.weather[0].main,
                 error: ""
             });
         } else {
@@ -169,6 +170,7 @@ export default class homeDisplay extends Component {
                 country={this.state.country}
                 humidity={this.state.humidity}
                 description={this.state.description}
+                main={this.state.main}
                 wind={this.state.wind}
                 error={this.state.error}
                 formEntry={this.state.formEntry} />;

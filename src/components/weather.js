@@ -1,7 +1,6 @@
 import React from 'react';
 import '../weatherDisplay.css'
 
-
 const Weather = (props) => {
     var weatherIcon;
     if (props.main === 'Clear') {
