@@ -70,8 +70,16 @@ export default class homeDisplay extends Component {
 
         const response = await api_call.json();
         console.log(response);
-
-        if (city && country) {
+        
+        if (response.cod === "404" && (city === "" || country === "")) {
+            this.setState({
+                error: "Please enter a city and country..."
+            })
+        } else if (response.cod === "404")  {
+            this.setState({
+                error: "City or country not recognized. Please check your spelling and re-enter a city and country."
+            })
+        } else if (city && country) {
             this.setState({
                 formView: false,
                 formEntry: true,
@@ -84,11 +92,7 @@ export default class homeDisplay extends Component {
                 description: response.weather[0].description,
                 main: response.weather[0].main,
                 error: "",
-            });
-        } else {
-            this.setState({
-                error: "Please enter your city and state..."
-            });
+            })
         }
     }
 
@@ -120,10 +124,6 @@ export default class homeDisplay extends Component {
                 main: response.weather[0].main,
                 error: ""
             });
-        } else {
-            this.setState({
-                error: "Please enter your city and state..."
-            });
         }
     }
 
@@ -140,6 +140,7 @@ export default class homeDisplay extends Component {
         let form;
         let geo;
         let reset;
+        let error;
 
         if (homeView) {
             formButton = <button className="btn" onClick={this.handleFormClick}>Enter Your City</button>
@@ -147,6 +148,7 @@ export default class homeDisplay extends Component {
             geoButton = <button className="btn" onClick={this.handleGeoClick}>Find Your Location</button>
         } else if (formView) {
             form = <Form loadWeather={this.getWeather} />;
+            error = <p className="message error"> {this.state.error} </p>
             reset = <button className="btn" onClick={this.handleResetClick}>Reset</button>
         } else if (formEntry) {
             weatherResults = <Weather
@@ -179,6 +181,7 @@ export default class homeDisplay extends Component {
 
         return (
             <div className="homeDisplayMain">
+                {error}
                 {formButton}
                 {form}
                 {or}
